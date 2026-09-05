@@ -40,6 +40,7 @@ class KT_CIMG_Main {
     private function init_hooks() {
         add_action('admin_menu', array($this, 'add_admin_menu'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_assets'));
+        add_action('wp_ajax_kt_cimg_save_settings', array($this, 'ajax_save_settings'));
         add_action('wp_ajax_kt_cimg_convert_bulk', array($this, 'ajax_convert_bulk'));
         add_action('wp_ajax_kt_cimg_scan_duplicates', array($this, 'ajax_scan_duplicates'));
         add_action('wp_ajax_kt_cimg_delete_duplicates', array($this, 'ajax_delete_duplicates'));
@@ -322,6 +323,20 @@ class KT_CIMG_Main {
     }
     
     // AJAX Handlers
+    public function ajax_save_settings() {
+        check_ajax_referer('kt_cimg_nonce', 'nonce');
+        
+        $settings = array(
+            'format' => sanitize_text_field($_POST['format']),
+            'quality' => intval($_POST['quality']),
+            'compression' => sanitize_text_field($_POST['compression']),
+            'auto_convert' => isset($_POST['auto_convert']) ? true : false
+        );
+        
+        update_option('kt_cimg_settings', $settings);
+        wp_send_json_success(array('message' => 'Settings saved successfully'));
+    }
+    
     public function ajax_convert_bulk() {
         check_ajax_referer('kt_cimg_nonce', 'nonce');
         
