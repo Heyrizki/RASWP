@@ -3,7 +3,7 @@
  * Plugin Name: KT-CIMG
  * Plugin URI: https://klikternak.com
  * Description: Plugin powerful dan ringan untuk konversi gambar (WebP/AVIF), pembersihan database, deteksi duplikat, rename massal, dan analisis filesystem. Semua fitur GRATIS!
- * Version: 2.0.0
+ * Version: 3.0.0
  * Author: Rizki Adi Saputra
  * Author URI: https://klikternak.com
  * License: GPL v2 or later
@@ -16,10 +16,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('KT_CIMG_VERSION', '2.0.0');
+define('KT_CIMG_VERSION', '3.0.0');
 define('KT_CIMG_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('KT_CIMG_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('KT_CIMG_BACKUP_DIR', wp_upload_dir()['basedir'] . '/kt-cimg-backups/');
+define('KT_CIMG_PROCESS_LOCK', 'kt_cimg_process_lock');
+define('KT_CIMG_PROCESS_STATUS', 'kt_cimg_process_status');
+define('KT_CIMG_PROCESS_DATA', 'kt_cimg_process_data');
 
 class KT_CIMG_Main {
     
@@ -40,32 +43,60 @@ class KT_CIMG_Main {
     private function init_hooks() {
         add_action('admin_menu', array($this, 'add_admin_menu'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_assets'));
+        
+        // Settings & Convert
         add_action('wp_ajax_kt_cimg_save_settings', array($this, 'ajax_save_settings'));
-        add_action('wp_ajax_kt_cimg_convert_bulk', array($this, 'ajax_convert_bulk'));
+        add_action('wp_ajax_kt_cimg_get_convert_stats', array($this, 'ajax_get_convert_stats'));
+        add_action('wp_ajax_kt_cimg_process_batch', array($this, 'ajax_process_batch'));
+        add_action('wp_ajax_kt_cimg_stop_process', array($this, 'ajax_stop_process'));
+        add_action('wp_ajax_kt_cimg_resume_process', array($this, 'ajax_resume_process'));
+        
+        // Image Cleaner
         add_action('wp_ajax_kt_cimg_scan_duplicates', array($this, 'ajax_scan_duplicates'));
         add_action('wp_ajax_kt_cimg_delete_duplicates', array($this, 'ajax_delete_duplicates'));
         add_action('wp_ajax_kt_cimg_scan_unused', array($this, 'ajax_scan_unused'));
         add_action('wp_ajax_kt_cimg_delete_unused', array($this, 'ajax_delete_unused'));
+        
+        // Bulk Rename
         add_action('wp_ajax_kt_cimg_preview_rename', array($this, 'ajax_preview_rename'));
         add_action('wp_ajax_kt_cimg_execute_rename', array($this, 'ajax_execute_rename'));
-        add_action('wp_ajax_kt_cimg_clean_database', array($this, 'ajax_clean_database'));
+        
+        // DB Cleaner
         add_action('wp_ajax_kt_cimg_analyze_db', array($this, 'ajax_analyze_db'));
+        add_action('wp_ajax_kt_cimg_clean_database', array($this, 'ajax_clean_database'));
+        
+        // Filesystem Analysis
         add_action('wp_ajax_kt_cimg_scan_filesystem', array($this, 'ajax_scan_filesystem'));
         add_action('wp_ajax_kt_cimg_delete_orphaned', array($this, 'ajax_delete_orphaned'));
+        
+        // Auto convert on upload
         add_filter('wp_generate_attachment_metadata', array($this, 'convert_on_upload'), 10, 2);
         add_filter('the_content', array($this, 'serve_modern_images'));
         
         register_activation_hook(__FILE__, array($this, 'activate_plugin'));
+        register_deactivation_hook(__FILE__, array($this, 'deactivate_plugin'));
     }
     
     public function activate_plugin() {
         $this->create_backup_dir();
+        delete_option(KT_CIMG_PROCESS_LOCK);
+        delete_option(KT_CIMG_PROCESS_STATUS);
+        delete_option(KT_CIMG_PROCESS_DATA);
+    }
+    
+    public function deactivate_plugin() {
+        delete_option(KT_CIMG_PROCESS_LOCK);
+        delete_option(KT_CIMG_PROCESS_STATUS);
+        delete_option(KT_CIMG_PROCESS_DATA);
     }
     
     private function create_backup_dir() {
         if (!file_exists(KT_CIMG_BACKUP_DIR)) {
             wp_mkdir_p(KT_CIMG_BACKUP_DIR);
             file_put_contents(KT_CIMG_BACKUP_DIR . 'index.php', '<?php // Silence is golden');
+            if (file_exists(KT_CIMG_BACKUP_DIR . '.htaccess')) {
+                unlink(KT_CIMG_BACKUP_DIR . '.htaccess');
+            }
         }
     }
     
