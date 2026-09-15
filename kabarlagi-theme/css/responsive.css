@@ -1,0 +1,174 @@
+/* Responsive Styles for Kabar Lagi Theme */
+
+@media (max-width: 1200px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    .headline-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-widgets {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    .main-navigation ul {
+        display: none;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .headline-main h2 {
+        font-size: 24px;
+    }
+    
+    .post-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .related-posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .floating-ad {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    .header-main {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .site-logo img {
+        max-height: 40px;
+    }
+    
+    .breaking-news-bar {
+        flex-direction: column;
+    }
+    
+    .breaking-label {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .post-title {
+        font-size: 28px;
+    }
+    
+    .post-content {
+        font-size: 16px;
+    }
+    
+    .single-post {
+        padding: 0 15px;
+    }
+    
+    .footer-widgets {
+        grid-template-columns: 1fr;
+    }
+    
+    .mobile-menu-bottom {
+        display: block;
+    }
+    
+    .dark-mode-toggle {
+        bottom: 70px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .parallax-ad-container {
+        height: 200px;
+    }
+    
+    .parallax-ad-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .post-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .headline-sub-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .headline-sub-item img {
+        width: 100%;
+        height: 150px;
+    }
+    
+    .social-share {
+        justify-content: center;
+    }
+    
+    .social-share a {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+    
+    .post-meta-single {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .related-posts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .load-more-btn {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .site-header,
+    .site-footer,
+    .mobile-menu-bottom,
+    .dark-mode-toggle,
+    .floating-ad,
+    .social-share,
+    .load-more-container,
+    .comments-area {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .container {
+        max-width: 100%;
+    }
+    
+    a {
+        text-decoration: underline;
+    }
+}

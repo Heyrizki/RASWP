@@ -1,0 +1,829 @@
+/*
+Theme Name: Kabar Lagi
+Theme URI: https://kabarlagi.com
+Author: Kabar Lagi Team
+Author URI: https://kabarlagi.com
+Description: Tema berita profesional dengan fitur lengkap: Home Builder, Dark Mode, Ads Placement, Inline Related Posts, Responsive Design, dan banyak lagi. Mendukung 9 posisi menu, breaking news, floating mobile menu, dan kustomisasi penuh.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: kabarlagi
+Tags: news, blog, magazine, dark-mode, responsive, seo-friendly, adsense-ready
+*/
+
+/* ===================================
+   CSS Variables & Reset
+   =================================== */
+:root {
+    --kl-primary-color: #c8102e;
+    --kl-secondary-color: #1a1a1a;
+    --kl-accent-color: #f39c12;
+    --kl-font-family: 'Inter', sans-serif;
+    --kl-font-size: 16px;
+    --kl-bg-color: #ffffff;
+    --kl-text-color: #333333;
+    --kl-border-color: #e5e5e5;
+    --kl-light-gray: #f8f9fa;
+    --kl-transition: all 0.3s ease;
+}
+
+[data-theme='dark'], .dark-mode {
+    --kl-bg-color: #1a1a1a;
+    --kl-text-color: #ffffff;
+    --kl-border-color: #333333;
+    --kl-light-gray: #2d2d2d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: var(--kl-font-size);
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--kl-font-family);
+    background-color: var(--kl-bg-color);
+    color: var(--kl-text-color);
+    line-height: 1.6;
+    transition: var(--kl-transition);
+}
+
+a {
+    color: var(--kl-primary-color);
+    text-decoration: none;
+    transition: var(--kl-transition);
+}
+
+a:hover {
+    opacity: 0.8;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ===================================
+   Header Styles
+   =================================== */
+.site-header {
+    background: var(--kl-bg-color);
+    border-bottom: 1px solid var(--kl-border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-bar {
+    background: var(--kl-secondary-color);
+    color: #fff;
+    padding: 8px 0;
+    font-size: 0.875rem;
+}
+
+.top-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-main {
+    padding: 20px 0;
+}
+
+.header-main .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.site-logo img {
+    max-height: 60px;
+    width: auto;
+}
+
+/* Navigation */
+.main-navigation ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.main-navigation a {
+    color: var(--kl-text-color);
+    font-weight: 500;
+    padding: 10px 0;
+    display: block;
+}
+
+.main-navigation a:hover {
+    color: var(--kl-primary-color);
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--kl-text-color);
+    margin: 5px 0;
+    transition: var(--kl-transition);
+}
+
+/* ===================================
+   Breaking News (Marquee)
+   =================================== */
+.breaking-news {
+    background: var(--kl-primary-color);
+    color: #fff;
+    padding: 10px 0;
+}
+
+.breaking-news .container {
+    display: flex;
+    align-items: center;
+}
+
+.breaking-news-label {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-right: 15px;
+    white-space: nowrap;
+    background: rgba(0,0,0,0.2);
+    padding: 5px 15px;
+    border-radius: 3px;
+}
+
+.breaking-news-marquee {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.breaking-news-content {
+    display: inline-block;
+    animation: marquee 30s linear infinite;
+    white-space: nowrap;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* ===================================
+   Headline Section
+   =================================== */
+.headline-section {
+    padding: 30px 0;
+}
+
+.headline-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.headline-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.headline-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: var(--kl-transition);
+}
+
+.headline-item:hover img {
+    transform: scale(1.05);
+}
+
+.headline-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 20px;
+    color: #fff;
+}
+
+.headline-overlay h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* ===================================
+   Post Grid Styles
+   =================================== */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 30px 0;
+}
+
+.post-card {
+    background: var(--kl-bg-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: var(--kl-transition);
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.post-card-thumbnail {
+    position: relative;
+    overflow: hidden;
+}
+
+.post-card-thumbnail img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: var(--kl-transition);
+}
+
+.post-card:hover .post-card-thumbnail img {
+    transform: scale(1.1);
+}
+
+.post-card-category {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--kl-primary-color);
+    color: #fff;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+.post-card-content {
+    padding: 20px;
+}
+
+.post-card-title {
+    font-size: 1.125rem;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.post-card-title a {
+    color: var(--kl-text-color);
+}
+
+.post-card-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 0.875rem;
+    color: #888;
+    margin-top: 15px;
+}
+
+.post-card-meta i {
+    margin-right: 5px;
+}
+
+/* ===================================
+   Single Post Styles
+   =================================== */
+.single-post-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.post-header {
+    margin-bottom: 30px;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.post-meta-single {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: #888;
+    font-size: 0.875rem;
+    padding: 15px 0;
+    border-top: 1px solid var(--kl-border-color);
+    border-bottom: 1px solid var(--kl-border-color);
+}
+
+.post-featured-image {
+    margin: 30px 0;
+}
+
+.post-featured-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.image-caption {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #888;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.post-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+}
+
+.post-content p {
+    margin-bottom: 20px;
+}
+
+.post-content h2, .post-content h3, .post-content h4 {
+    margin: 30px 0 15px;
+    color: var(--kl-text-color);
+}
+
+.post-content blockquote {
+    border-left: 4px solid var(--kl-primary-color);
+    padding-left: 20px;
+    margin: 30px 0;
+    font-style: italic;
+    color: #666;
+}
+
+.post-content img {
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    padding: 15px 0;
+    font-size: 0.875rem;
+}
+
+.breadcrumb ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.breadcrumb li {
+    position: relative;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: '/';
+    margin-left: 10px;
+    color: #888;
+}
+
+/* Share Buttons */
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 30px 0;
+    padding: 20px 0;
+    border-top: 1px solid var(--kl-border-color);
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #fff;
+    transition: var(--kl-transition);
+}
+
+.share-btn-facebook { background: #3b5998; }
+.share-btn-twitter { background: #1da1f2; }
+.share-btn-whatsapp { background: #25d366; }
+.share-btn-telegram { background: #0088cc; }
+.share-btn-linkedin { background: #0077b5; }
+
+.share-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* Related Posts */
+.related-posts {
+    margin: 50px 0;
+    padding: 30px 0;
+    border-top: 1px solid var(--kl-border-color);
+}
+
+.related-posts-title {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+}
+
+.inline-related-post {
+    background: var(--kl-light-gray);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+    border-left: 4px solid var(--kl-primary-color);
+}
+
+/* Load More Button */
+.load-more-container {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.load-more-btn {
+    background: var(--kl-primary-color);
+    color: #fff;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--kl-transition);
+}
+
+.load-more-btn:hover {
+    background: var(--kl-secondary-color);
+    transform: translateY(-2px);
+}
+
+.load-more-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* ===================================
+   Floating Ads
+   =================================== */
+.floating-ad {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    max-width: 160px;
+}
+
+.floating-ad-left {
+    left: 10px;
+}
+
+.floating-ad-right {
+    right: 10px;
+}
+
+.floating-ad img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* Parallax Ad Inside Article */
+.parallax-ad {
+    margin: 40px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.parallax-ad-inner {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 60px 20px;
+}
+
+/* ===================================
+   Footer Styles
+   =================================== */
+.site-footer {
+    background: var(--kl-secondary-color);
+    color: #fff;
+    padding: 50px 0 20px;
+    margin-top: 50px;
+}
+
+.footer-widgets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-widget h4 {
+    font-size: 1.125rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--kl-primary-color);
+}
+
+.footer-bottom {
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+/* Social Media Icons in Footer */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    transition: var(--kl-transition);
+}
+
+.social-icon:hover {
+    background: var(--kl-primary-color);
+    transform: translateY(-3px);
+}
+
+/* ===================================
+   Floating Mobile Menu Bottom
+   =================================== */
+.mobile-bottom-menu {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--kl-bg-color);
+    border-top: 1px solid var(--kl-border-color);
+    padding: 10px 0;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.mobile-bottom-menu ul {
+    display: flex;
+    justify-content: space-around;
+}
+
+.mobile-bottom-menu a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--kl-text-color);
+    padding: 5px 10px;
+}
+
+.mobile-bottom-menu i {
+    font-size: 1.25rem;
+    margin-bottom: 3px;
+}
+
+/* ===================================
+   Dark Mode Toggle
+   =================================== */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--kl-primary-color);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: var(--kl-transition);
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* ===================================
+   Widget Styles
+   =================================== */
+.widget {
+    margin-bottom: 30px;
+}
+
+.widget-title {
+    font-size: 1.125rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--kl-primary-color);
+    position: relative;
+}
+
+.widget-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--kl-primary-color);
+}
+
+.trending-posts-list,
+.latest-posts-list,
+.popular-posts-list {
+    list-style: none;
+}
+
+.trending-post-item,
+.latest-post-item,
+.popular-post-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--kl-border-color);
+}
+
+.trending-post-thumb,
+.latest-post-thumb {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.trending-post-thumb img,
+.latest-post-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.trending-post-content h4,
+.latest-post-content h4 {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.trending-post-content h4 a,
+.latest-post-content h4 a {
+    color: var(--kl-text-color);
+}
+
+.trending-post-views,
+.latest-post-time {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/* ===================================
+   Responsive Design
+   =================================== */
+@media (max-width: 992px) {
+    .main-navigation ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--kl-bg-color);
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+    
+    .main-navigation ul.active {
+        display: flex;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .floating-ad {
+        display: none;
+    }
+    
+    .post-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-bottom-menu {
+        display: block;
+    }
+    
+    .site-header {
+        padding-bottom: 60px;
+    }
+    
+    .breaking-news .container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .headline-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .post-title {
+        font-size: 1.5rem;
+    }
+    
+    .single-post-container {
+        padding: 20px 15px;
+    }
+    
+    .share-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .post-card-meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+/* ===================================
+   Utility Classes
+   =================================== */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-1 { margin-top: 10px; }
+.mt-2 { margin-top: 20px; }
+.mt-3 { margin-top: 30px; }
+.mb-1 { margin-bottom: 10px; }
+.mb-2 { margin-bottom: 20px; }
+.mb-3 { margin-bottom: 30px; }
+
+.hidden { display: none; }
+.visible { display: block; }
+
+/* AMP Support Styles */
+.amp-version {
+    font-size: 0.75rem;
+    color: #888;
+    text-align: center;
+    padding: 10px;
+}
