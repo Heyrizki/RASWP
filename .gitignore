@@ -1,0 +1,7 @@
+```
+# Compressed files
+*.zip
+
+# WordPress theme specific
+tempo-news-theme.zip
+```
