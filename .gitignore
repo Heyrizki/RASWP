@@ -1,7 +1,39 @@
 ```
-# Compressed files
-*.zip
+# Dependencies
+node_modules/
 
-# WordPress theme specific
-tempo-news-theme.zip
+# Build artifacts
+dist/
+build/
+*.min.js
+*.min.css
+*.map
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# WordPress specific
+wp-content/cache/
+*.wp-config.local.php
+wp-content/uploads/
+
+# PHP
+*.php.bak
+*.php~
 ```
